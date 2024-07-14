@@ -3,7 +3,7 @@
 DELIMITER //
 CREATE PROCEDURE ComputeAverageScoreForUser(IN user_id INT)
 BEGIN
-    DECLARE average_score INT;
+    DECLARE average_score FLOAT;
     DECLARE total_score INT;
     DECLARE corrections_count INT;
     SELECT SUM(score), COUNT(user_id) INTO total_score, corrections_count FROM corrections WHERE user_id = user_id;
