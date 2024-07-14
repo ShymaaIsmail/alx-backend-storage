@@ -13,7 +13,7 @@ BEGIN
     ELSE
         SET average_score = 0;
     END IF;
-    UPDATE users SET average_score = average_score WHERE user_id = user_id;
+    UPDATE users SET average_score = average_score WHERE id = user_id;
 END;
 //
 DELIMITER ;
