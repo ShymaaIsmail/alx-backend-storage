@@ -1,7 +1,7 @@
 -- Create a stored procedure AddBonus
 -- That adds a new correction for a student.
 DELIMITER //
-CREATE PROCEDURE IF NOT EXISTS AddBonus(IN user_id INT, IN project_name VARCHAR(255), IN score INT)
+CREATE PROCEDURE AddBonus(IN user_id INT, IN project_name VARCHAR(255), IN score INT)
 BEGIN
     DECLARE project_id INT;
     SET project_id = (SELECT id FROM projects WHERE name = project_name);
