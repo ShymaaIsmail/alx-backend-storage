@@ -7,7 +7,12 @@ BEGIN
     DECLARE total_score INT;
     DECLARE corrections_count INT;
     SELECT SUM(score), COUNT(*) INTO total_score, corrections_count FROM corrections WHERE user_id = user_id;
-    SET average_score = total_score / corrections_count;
+    -- Calculate the average score
+    IF corrections_count > 0 THEN
+        SET average_score = total_score / corrections_count;
+    ELSE
+        SET average_score = 0;
+    END IF;
     UPDATE users SET average_score = average_score WHERE user_id = user_id;
 END;
 //
