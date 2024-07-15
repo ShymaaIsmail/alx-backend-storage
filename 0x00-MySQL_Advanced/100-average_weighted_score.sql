@@ -24,13 +24,11 @@ BEGIN
     ELSE
         SET average_score = 0;
     END IF;
-
-    -- Insert or update the computed average score into a table or perform any desired action
-    -- Example: inserting into a table `average_scores`
-    INSERT INTO average_scores (user_id, average_weighted_score, computed_at)
-    VALUES (user_id, average_score, NOW());
-
-    -- You can also update an existing record if it exists for the user_id
+    
+    -- Update the average_score in users table for the given user_id
+    UPDATE users
+    SET average_score = average_score
+    WHERE id = user_id;
 
 END //
 
