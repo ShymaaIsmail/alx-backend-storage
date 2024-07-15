@@ -1,4 +1,5 @@
 -- Define the procedure
+-- Create ComputeAverageWeightedScoreForUser
 DELIMITER //
 
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser (IN user_id INT)
