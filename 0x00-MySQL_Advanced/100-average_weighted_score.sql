@@ -1,3 +1,5 @@
+-- CREATE PROCEDURE ComputeAverageWeightedScoreForUser
+-- THAT Calculates average wighted score for a student
 DELIMITER //
 
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser (IN user_id INT)
