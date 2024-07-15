@@ -4,9 +4,9 @@ DELIMITER //
 
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser (IN user_id INT)
 BEGIN
-    DECLARE total_score DECIMAL(10, 2);
-    DECLARE total_weight DECIMAL(10, 2);
-    DECLARE average_score DECIMAL(10, 2);
+    DECLARE total_score Float;
+    DECLARE total_weight INT;
+    DECLARE average_score Float;
 
     -- Calculate total weighted score
     SELECT SUM(score * weight) INTO total_score
