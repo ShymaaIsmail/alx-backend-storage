@@ -1,5 +1,4 @@
--- CREATE PROCEDURE ComputeAverageWeightedScoreForUser
--- THAT Calculates average wighted score for a student
+-- Define the procedure
 DELIMITER //
 
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser (IN user_id INT)
@@ -10,13 +9,15 @@ BEGIN
 
     -- Calculate total weighted score
     SELECT SUM(score * weight) INTO total_score
-    FROM scores
-    WHERE user_id = user_id;
+    FROM corrections
+    JOIN projects ON corrections.project_id = projects.id
+    WHERE corrections.user_id = user_id;
 
     -- Calculate total weight
     SELECT SUM(weight) INTO total_weight
-    FROM scores
-    WHERE user_id = user_id;
+    FROM projects
+    JOIN corrections ON projects.id = corrections.project_id
+    WHERE corrections.user_id = user_id;
 
     -- Compute average weighted score
     IF total_weight > 0 THEN
