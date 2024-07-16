@@ -14,5 +14,5 @@ if __name__ == "__main__":
     print(f"{spc}method PUT: {ngnx.count_documents({'method': 'PUT'})}")
     print(f"{spc}method PATCH: {ngnx.count_documents({'method': 'PATCH'})}")
     print(f"{spc}method DELETE: {ngnx.count_documents({'method': 'DELETE'})}")
-    print(f"{ngnx.count_documents({'path': '/status', 'method': 'GET'})} \
-        status check")
+    count = ngnx.count_documents({'path': '/status', 'method': 'GET'})
+    print(f"{count} status check")
