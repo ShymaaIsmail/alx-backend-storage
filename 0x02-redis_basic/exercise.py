@@ -24,20 +24,19 @@ class Cache:
         return random_id
 
     def get(self, key: str,
-            fn: Optional[Callable[[object], str]] = None) -> str:
+            fn: Optional[Callable[[bytes], any]] = None) -> Optional[any]:
         """get value of key with correct original datatype"""
         value = self._redis.get(key)
-        if value and fn:
-            return fn(value)
-        elif value and fn is None:
+        if value is not None:
+            if fn:
+                return fn(value)
             return value.decode('utf-8')
-        else:
-            return fn(value)
+        return None
 
-    def get_str(self):
+    def get_str(self, key) -> str:
         """get_str"""
-        return "s"
+        return self.get(key, lambda value: value.decode('utf-8'))
 
-    def get_int(self):
+    def get_int(self, key) -> int:
         """get_int"""
-        return 0
+        return self.get(key, lambda value: int(value.decode('utf-8')))
