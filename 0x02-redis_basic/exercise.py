@@ -33,3 +33,11 @@ class Cache:
             return value.decode('utf-8')
         else:
             return fn(value)
+
+    def get_str(self):
+        """get_str"""
+        return "s"
+
+    def get_int(self):
+        """get_int"""
+        return 0
