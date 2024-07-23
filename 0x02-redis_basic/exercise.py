@@ -64,11 +64,11 @@ class Cache:
         return self.get(key, lambda value: int(value.decode('utf-8')))
 
 def replay(self, method: Callable):
-        """replay to show call history of a function"""
-        inputs = self._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)
-        outputs = self._redis.lrange(f"{method.__qualname__}:outputs", 0, -1)
-        zipped_list = zip(inputs, outputs)
-        name = method.__qualname__
-        print(f"{method.__qualname__} was called {len(zipped_list)} times:")
-        for (i, o) in enumerate(zipped_list):
-            print(f"{name}(*({i.decode('UTF-8')},)) -> {o.decode('UTF-8')}")
+    """replay to show call history of a function"""
+    inputs = self._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)
+    outputs = self._redis.lrange(f"{method.__qualname__}:outputs", 0, -1)
+    zipped_list = zip(inputs, outputs)
+    name = method.__qualname__
+    print(f"{method.__qualname__} was called {len(zipped_list)} times:")
+    for (i, o) in enumerate(zipped_list):
+        print(f"{name}(*({i.decode('UTF-8')},)) -> {o.decode('UTF-8')}")
