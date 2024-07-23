@@ -67,6 +67,7 @@ class Cache:
         """replay to show call history of a function"""
         inputs = self._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)
         outputs = self._redis.lrange(f"{method.__qualname__}:outputs", 0, -1)
+        zipped_list = list(zip(inputs, outputs))
         print(f"{method.__qualname__} was called {len(inputs)} times:")
-        for i, input_item in enumerate(inputs):
-            print(f"{method.__qualname__}(*({input_item},)) -> {outputs[i]}")
+        for item in enumerate(zipped_list):
+            print(f"{method.__qualname__}(*({item[0]},)) -> {item[1]}")
