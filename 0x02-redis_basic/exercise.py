@@ -36,7 +36,7 @@ def replay(method: Callable) -> None:
     zipped_list = tuple(zip(inputs, outputs))
     print(f"{method.__qualname__} was called {len(zipped_list)} times:")
     for (i, o) in zipped_list:
-        print(f"{name}(*({i.decode('UTF-8')},)) -> {o.decode('UTF-8')}")
+        print(f"{name}(*{i.decode('UTF-8')},) -> {o.decode('UTF-8')}")
 
 
 class Cache:
