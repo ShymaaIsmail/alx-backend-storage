@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
 """Exercise """
 
-
-import redis
+from functools import wraps
 from typing import Optional, Callable, Union
 import uuid
+import redis
+
+
+def count_calls(method: Callable) -> Callable:
+    """count_calls"""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache:
@@ -17,6 +26,7 @@ class Cache:
         """Cache delete"""
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store data"""
         random_id = str(uuid.uuid1())
