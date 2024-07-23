@@ -17,7 +17,7 @@ class Cache:
         """Cache delete"""
         self._redis.flushdb()
 
-    def store(self, data: Union[str, bytes, int, float]) -> AnyStr:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store data"""
         random_id = str(uuid.uuid1())
         self._redis.set(random_id, data)
