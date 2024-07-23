@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""caching erb requests"""
 import requests
 import time
 from functools import wraps
@@ -9,6 +10,7 @@ cache_expiration = 10  # cache expiration time in seconds
 
 
 def cache_decorator(func):
+    """caching decorator"""
     @wraps(func)
     def wrapper(url):
         current_time = time.time()
@@ -27,6 +29,7 @@ def cache_decorator(func):
 
 @cache_decorator
 def get_page(url: str) -> str:
+    """get page"""
     response = requests.get(url)
     response.raise_for_status()  # Ensure we handle HTTP errors
     return response.text
@@ -34,6 +37,7 @@ def get_page(url: str) -> str:
 
 # Example usage (You can comment out this part when you run the code)
 if __name__ == "__main__":
+    """main event"""
     url = "http://slowwly.robertomurray.co.uk"
     print(get_page(url))  # Fetch and cache the page
     time.sleep(5)  # Wait less than cache expiration time
