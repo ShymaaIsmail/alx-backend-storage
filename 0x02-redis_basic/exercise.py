@@ -27,6 +27,18 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable) -> None:
+    """replay to show call history of a function"""
+    redis_cache = redis.Redis()
+    name = method.__qualname__
+    inputs = redis_cache.lrange(f"{method.__qualname__}:inputs", 0, -1)
+    outputs = redis_cache.lrange(f"{method.__qualname__}:outputs", 0, -1)
+    zipped_list = tuple(zip(inputs, outputs))
+    print(f"{method.__qualname__} was called {len(zipped_list)} times:")
+    for (i, o) in zipped_list:
+        print(f"{name}(*({i.decode('UTF-8')},)) -> {o.decode('UTF-8')}")
+
+
 class Cache:
     """Cache Class"""
     def __init__(self):
@@ -64,12 +76,9 @@ class Cache:
         return self.get(key, lambda value: int(value.decode('utf-8')))
 
 
-def replay(self, method: Callable):
-    """replay to show call history of a function"""
-    inputs = self._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)
-    outputs = self._redis.lrange(f"{method.__qualname__}:outputs", 0, -1)
-    zipped_list = zip(inputs, outputs)
-    name = method.__qualname__
-    print(f"{method.__qualname__} was called {len(zipped_list)} times:")
-    for (i, o) in enumerate(zipped_list):
-        print(f"{name}(*({i.decode('UTF-8')},)) -> {o.decode('UTF-8')}")
+if __name__ == "__main__":
+    cache = Cache()
+    cache.store("foo")
+    cache.store("bar")
+    cache.store(42)
+    replay(cache.store)
