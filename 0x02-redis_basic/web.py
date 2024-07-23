@@ -17,12 +17,10 @@ def cache_decorator(func):
         if cache_key in cache:
             cache_entry, timestamp = cache[cache_key]
             if current_time - timestamp < cache_expiration:
-                print(f"Returning cached data for {url}")
                 return cache_entry
         # Call the function and cache the result
         result = func(url)
         cache[cache_key] = (result, current_time)
-        print(f"Fetching and caching data for {url}")
         return result
     return wrapper
 
