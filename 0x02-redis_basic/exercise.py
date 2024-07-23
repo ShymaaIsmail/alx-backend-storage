@@ -3,7 +3,7 @@
 
 
 import redis
-from typing import AnyStr, Union
+from typing import Optional, Callable, Union
 import uuid
 
 
@@ -22,3 +22,14 @@ class Cache:
         random_id = str(uuid.uuid1())
         self._redis.set(random_id, data)
         return random_id
+
+    def get(self, key: str,
+            fn: Optional[Callable[[object], str]] = None) -> str:
+        """get value of key with correct original datatype"""
+        value = self._redis.get(key)
+        if value and fn:
+            return fn(value)
+        elif value and fn is None:
+            return value.decode('utf-8')
+        else:
+            return fn(value)
