@@ -62,3 +62,11 @@ class Cache:
     def get_int(self, key) -> int:
         """get_int"""
         return self.get(key, lambda value: int(value.decode('utf-8')))
+
+    def replay(self, method: Callable):
+        """replay to show call history of a function"""
+        inputs = self._redis.lrange(f"{method.__qualname__}:inputs", 0, -1)
+        outputs = self._redis.lrange(f"{method.__qualname__}:outputs", 0, -1)
+        print(f"{method.__qualname__} was called {len(inputs)} times:")
+        for i, input_item in enumerate(inputs):
+            print(f"{method.__qualname__}(*({input_item},)) -> {outputs[i]}")
