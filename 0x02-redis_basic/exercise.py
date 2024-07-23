@@ -30,7 +30,7 @@ class Cache:
         if value is not None:
             if fn:
                 return fn(value)
-            return value.decode('utf-8')
+            return value
         return None
 
     def get_str(self, key) -> str:
